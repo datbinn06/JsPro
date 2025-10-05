@@ -107,3 +107,16 @@ function getData(callback) {
 getData(function(result) {
     console.log("Dữ liệu nhận được:", result);
 });
+
+function getData(callback) {
+    console.log("Đang lấy dữ liệu...");
+    setTimeout(() => {
+        const data = { id: 1, name: "Sản phẩm A" };
+        callback(data);
+    }, 2000);
+}
+
+getData((result) =>{
+    console.log("Dữ liệu nhận được:", result);
+});
+
