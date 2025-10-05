@@ -44,3 +44,24 @@ setTimeout(function() {
 }, 2000);
 
 console.log("Kết thúc");
+
+// switch
+function calculate(a, b, method) {
+    switch(method) {
+        case "add":
+            return a + b;
+        case "subtract":
+            return a - b;
+        case "multiply":
+            return a * b;
+        case "divide":
+            return b !== 0 ? a / b : "Không thể chia cho 0";
+        default:
+            return "Phép toán không hợp lệ";
+    }
+}
+
+console.log(calculate(10, 5, "add"));      // 15
+console.log(calculate(10, 5, "subtract")); // 5
+console.log(calculate(10, 5, "multiply")); // 50
+console.log(calculate(10, 5, "divide"));   // 2
