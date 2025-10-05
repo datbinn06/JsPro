@@ -77,3 +77,33 @@ console.log(calculate(10, 5, "add"));      // 15
 console.log(calculate(10, 5, "subtract")); // 5
 console.log(calculate(10, 5, "multiply")); // 50
 console.log(calculate(10, 5, "divide"));   // 2
+
+
+// callback k vô danh
+function getData(callback) {
+    console.log("Đang lấy dữ liệu...");
+    setTimeout(() => {
+        const data = { id: 1, name: "Sản phẩm A" };
+        callback(data);
+    }, 2000);
+}
+function showData(result) {
+    console.log("Dữ liệu nhận được:", result);
+}
+
+// Gọi hàm, và truyền callback có tên vào
+getData(showData);
+
+
+// vô danh 
+function getData(callback) {
+    console.log("Đang lấy dữ liệu...");
+    setTimeout(() => {
+        const data = { id: 1, name: "Sản phẩm A" };
+        callback(data);
+    }, 2000);
+}
+
+getData(function(result) {
+    console.log("Dữ liệu nhận được:", result);
+});
