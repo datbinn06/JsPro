@@ -10,6 +10,18 @@ function processUser(callback) {
 
 console.log(processUser(sayHello)); // Xin chào Đạt
 
+//
+function hello(name, callback) {
+    console.log("Xin chào " + name);
+    callback(); // gọi hàm được truyền vào
+}
+
+function afterHello() {
+    console.log("Tôi là callback nè!");
+}
+
+hello("Đạt", afterHello);
+
 
 //tính toán callback
 function add(a, b) {
