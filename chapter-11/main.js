@@ -1,26 +1,73 @@
-const addProduct = () =>{
-    event.preventDefault(); // ngan trinh duyet chuyen huong
-    const tensanpham = document.querySelector('input[name="tensanpham"]').value //lay tri cua o input
-    const asp = document.querySelector('input[name="anhsanpham"]').value //lay tri cua o input
-    const danhmuc = document.querySelector('select[name="danhmucsanpham"]').value //lay tri cua o input
-    const soluong = document.querySelector('input[name="soluongsanpham"]').value //lay tri cua o input
-    const giatien = document.querySelector('input[name="giatiensanpham"]').value //lay tri cua o input
+const API = "http://localhost:3000/products";
+const productList = document.getElementById("productList");
+const productForm = document.getElementById("product-form");
 
 
-    // su dung fetch de luu tru du lieu
-    //fetch('link API')
-    fetch('http://localhost:3000/products',{
-        method : 'POST',
-         headers: {
-      'Content-Type': 'application/json'
-    },
-        body :JSON.stringify({
-            "name" :tensanpham,
-            "image" :asp,
-            "cat_id" :danhmuc,
-            "price" : giatien,
-            "soluong" :soluong,
-        })
-    });
-    alert('Them thanh cong');
+if (productForm) {
+  productForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const product = {
+      name: document.getElementById("name").value,
+      price: document.getElementById("price").value,
+    };
+    addProduct(product);
+  });
 }
+
+const addProduct = (product) => {
+  if (!product.name || !product.price) {
+    alert("Vui lòng nhập đầy đủ thông tin");
+    return;
+  }
+  axios
+    .post(API, product)
+    .then(() => {
+      alert("Thêm sản phẩm thành công");
+      window.location.href = "index.html"; 
+    })
+    .catch(() => alert("Thêm sản phẩm thất bại"));
+};
+
+const deleteProduct = (id) => {
+  if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) return;
+  axios
+    .delete(`${API}/${id.toString()}`)
+    .then(() => {
+      alert("Xóa thành công");
+      render();
+    })
+    .catch((err) => {
+      console.error("Lỗi khi xóa:", err);
+      alert("Xóa thất bại");
+    });
+};
+
+
+const render = () => {
+  if (!productList) return;
+  axios
+    .get(API)
+    .then((response) => {
+      const result = response.data
+        .map(
+          (item, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>
+              <a href="./edit.html?id=${item.id}" class="btn btn-primary">Sửa</a>
+              <button class="btn btn-danger" onclick="deleteProduct(${item.id})">Xóa</button>
+            </td>
+          </tr>
+        `
+        )
+        .join("");
+      productList.innerHTML = result;
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tải danh sách:", error);
+    });
+};
+
+render();
