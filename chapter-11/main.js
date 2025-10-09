@@ -54,7 +54,7 @@ const updateProduct = (product) => {
         .put(`${API}/${id}`, product)
         .then(() => {
             // alert("Cập nhật sản phẩm thành công");
-            window.location.href = "./";
+            window.location.href = "index.html";
         })
         .catch(() => alert("Cập nhật sản phẩm thất bại"));
     return;
